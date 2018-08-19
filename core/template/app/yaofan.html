@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="gbk">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>yaofan.sol</title>
+    <script src="js/web3.min.js"></script>
+</head>
+<body>
+    <h2>功德箱</h2>
+    <h3>积德人数：<em id="goodman_count"></em></h3>
+    <h4>最低打赏 0.1 eth</h4>
+    <input type="button" id="send" value="积德行善">
+    <script>
+        var web3 = new Web3(window.web3.currentProvider);
+        var Contract;
+        var abi = [{"constant": false, "inputs": [{"name": "goodman", "type": "address"}], "name": "givemoney", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function"}, {"constant": true, "inputs": [], "name": "giveme_min", "outputs": [{"name": "", "type": "uint256"}], "payable": false, "stateMutability": "view", "type": "function"}, {"constant": false, "inputs": [], "name": "payall", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function"}, {"constant": true, "inputs": [], "name": "goodman_count", "outputs": [{"name": "", "type": "uint256"}], "payable": false, "stateMutability": "view", "type": "function"}, {"constant": true, "inputs": [{"name": "", "type": "address"}], "name": "list", "outputs": [{"name": "", "type": "bool"}], "payable": false, "stateMutability": "view", "type": "function"}, {"constant": true, "inputs": [], "name": "admin", "outputs": [{"name": "", "type": "address"}], "payable": false, "stateMutability": "view", "type": "function"}, {"inputs": [{"name": "god", "type": "address"}], "payable": false, "stateMutability": "nonpayable", "type": "constructor"}];
+        var address = '0x60e8490cdE86838eCf24103F5576Dc4c98b757B4';
+        async function init(){
+            Contract = await new web3.eth.Contract(abi,address);
+            Contract.methods.goodman_count().call().then(function(num){
+                document.getElementById('goodman_count').textContent = num;
+            });
+
+        }
+        init(); 
+        async function send(){
+            var accounts = await web3.eth.getAccounts();
+            Contract.methods.givemoney(accounts[0])
+            .send({from:accounts[0],value:web3.utils.toWei(0.1, "ether")})
+            .then(function(data){
+                console.log(data);
+            })
+        
+        }
+        document.getElementById('send').addEventListener('click',send);
+    </script>
+</body>
+</html>
+        

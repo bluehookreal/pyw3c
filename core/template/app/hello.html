@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="gbk">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hello.sol</title>
+    <script src="js/web3.min.js"></script>
+</head>
+<body>
+    <script>
+        var web3 = new Web3(window.web3.currentProvider);
+        var Contract;
+        var abi = [{"constant": false, "inputs": [{"name": "_greeting", "type": "string"}], "name": "setGreeting", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function"}, {"constant": true, "inputs": [], "name": "greet", "outputs": [{"name": "", "type": "string"}], "payable": false, "stateMutability": "view", "type": "function"}, {"constant": true, "inputs": [], "name": "greeting", "outputs": [{"name": "", "type": "string"}], "payable": false, "stateMutability": "view", "type": "function"}, {"inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor"}];
+        var address = '0x4c97a855196AA4449265bdddDD967dA2DA59CDe2';
+        async function init(){
+            Contract = await new web3.eth.Contract(abi,address);
+        }
+        init(); 
+    </script>
+</body>
+</html>
+        
